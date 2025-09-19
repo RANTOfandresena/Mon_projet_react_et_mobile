@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Mes Projets rect et mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.1);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); }
+            50% { box-shadow: 0 20px 40px rgba(255, 255, 255, 0.3); }
+        }
+        
+        .profile-name {
+            font-size: 3rem;
+            color: white;
+            margin: 20px 0 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-title {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .nav-dots {
+            display: inline-flex;
+            gap: 15px;
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+        
+        /* Slider Container */
+        .slider-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .slides-wrapper {
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 50px;
+        }
+        
+        .slides {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .slide {
+            min-width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .slide-content {
+            flex: 1;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .slide-media {
+            flex: 1;
+            text-align: center;
+            animation: slideInRight 0.8s ease-out;
+        }
+        
+        .slide-media img, .slide-media video {
+            max-width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            margin-bottom: 15px;
+        }
+        
+        .slide-media img:hover, .slide-media video:hover {
+            transform: scale(1.05);
+        }
+        
+        .project-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            
+            background: rgba(255, 255, 255, 0.1);
+            border: solid 6px #6c68ca;
+            border-radius: 50%;
+        }
+        
+        .media-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .media-thumbnails {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .media-thumbnail {
+            width: 80px;
+            height: 60px !important;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .media-thumbnail:hover,
+        .media-thumbnail.active {
+            opacity: 1;
+            border-color: #667eea;
+            transform: scale(1.1);
+        }
+        
+        .main-media {
+            position: relative;
+        }
+        
+        .project-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-description {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .project-tech {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        
+        .tech-tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        /* Navigation Buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .nav-button.prev {
+            left: -30px;
+        }
+        
+        .nav-button.next {
+            right: -30px;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+            
+            .profile-name {
+                font-size: 2rem;
+            }
+            
+            .project-title {
+                font-size: 2rem;
+            }
+            
+            .nav-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Particles Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="profile-container">
+            <img src="assets/mon_profile.png" alt="Mon Profil" class="profile-image">
+            <h1 class="profile-name">RANT0</h1>
+            <p class="profile-title">Développeur Full Stack | Mobile & Web</p>
+            <a download="" href="assets/cv Herimandranto Fandresena.pdf" class="project-link" style="background: white;color: #7472d1;">
+                Telecharger mon CV
+            </a>
+        </div>
+    </section>
+    
+    <!-- Navigation Dots -->
+    <div class="nav-container">
+        <div class="nav-dots" id="navDots"></div>
+    </div>
+    
+    <!-- Slider -->
+    <div class="slider-container">
+        <div class="slides-wrapper">
+            <div class="slides" id="slides">
+                <!-- Slide 1: Faritany -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <img src="assets/logo_faritany.png" alt="Logo Faritany" class="project-logo">
+                        <h2 class="project-title">Jeu de faritany</h2>
+                        <p class="project-description">
+                            Jeu de faritany multijouer local ou en ligne
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Phaser</span>
+                            <span class="tech-tag">Actix web (Rust)</span>
+                        </div>
+                        <a href="https://github.com/RANTOfandresena/list_jeu" class="project-link" target="_blank">
+                            Voir le projet
+                        </a>
+                    </div>
+                    <div class="slide-media">
+                        <div class="media-gallery">
+                            <div class="main-media">
+                                <video id="faritany-main" controls muted autoplay>
+                                    <source src="assets/faritany.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="media-thumbnails">
+                                <video class="media-thumbnail active" autoplay data-target="faritany-main" data-src="assets/faritany.mp4" data-type="video">
+                                    <source src="assets/faritany.mp4" type="video/mp4">
+                                </video>
+                                <video class="media-thumbnail" autoplay data-target="faritany-main" data-src="assets/faritany1.mp4" data-type="video">
+                                    <source src="assets/faritany1.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 2: HearMe -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <img src="assets/logo_hearme.jpg" alt="Logo HearMe" class="project-logo">
+                        <h2 class="project-title">HearMe</h2>
+                        <p class="project-description">
+                            HearMe est une plateforme inclusive dédiée à l’apprentissage de la langue des signes.<br /> 
+                            HearMe offrons des cours interactifs, des quiz, et des outils innovants pour permettre à chacun, sourd ou entendant, d’apprendre à communiquer en langue des signes. 
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">VPS</span>
+                        </div>
+
+                        <a href="https://hearme.digital" class="project-link" target="_blank">
+                            Voir le projet (https://hearme.digital)
+                        </a>
+                    </div>
+                    <div class="slide-media">
+                        <div class="media-gallery">
+                            <div class="main-media">
+                                <video id="hearme-main" controls muted autoplay>
+                                    <source src="assets/hearme.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 3: Hui -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <img src="assets/logo_hui.png" alt="Logo Hui" class="project-logo">
+                        <h2 class="project-title">Hackathon 2025</h2>
+                        <p class="project-description">
+                            Application web développée lors d'un hackathon, offrant une solution 
+                            innovante la digitalisation. Interface moderne et 
+                            fonctionnalités avancées pour optimiser la productivité.
+                            (Projet construit en 20 heurs)
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Django</span>
+                        </div>
+                        <a href="https://github.com/RANTOfandresena/hackathon" class="project-link" target="_blank">
+                            Voir le projet
+                        </a>
+                    </div>
+                    <div class="slide-media">
+                        <div class="media-gallery">
+                            <div class="main-media">
+                                <video id="hui-main" controls muted autoplay>
+                                    <source src="assets/hui.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 4: Handeha -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <img src="assets/logo_handeha.png" alt="Logo Handeha" class="project-logo">
+                        <h2 class="project-title">Handeha</h2>
+                        <p class="project-description">
+                            Application mobile native développée en Java/Kotlin pour Android. 
+                            Application de reservation de transport public 
+                            (payement en ligne,notification des payement sans donné mobile,carte hors ligne)
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Android</span>
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">Kotlin</span>
+                        </div>
+                        <a href="https://github.com/RANTOfandresena/app_android_handeha" class="project-link" target="_blank">
+                            Voir le projet
+                        </a>
+                    </div>
+                    <div class="slide-media">
+                        <div class="media-gallery">
+                            <div class="main-media">
+                                <img id="handeha-main" src="assets/handeha1.png" alt="Handeha App">
+                            </div>
+                            <div class="media-thumbnails">
+                                <img class="media-thumbnail active" data-target="handeha-main" data-src="assets/handeha1.png" data-type="image" src="assets/handeha1.png" alt="Handeha 1">
+                                <img class="media-thumbnail" data-target="handeha-main" data-src="assets/handeha2.png" data-type="image" src="assets/handeha2.png" alt="Handeha 2">
+                                <img class="media-thumbnail" data-target="handeha-main" data-src="assets/handeha3.png" data-type="image" src="assets/handeha3.png" alt="Handeha 3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 5: Block Note -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <img src="assets/logo_note.png" alt="Logo Block Note" class="project-logo">
+                        <h2 class="project-title">Block Note</h2>
+                        <p class="project-description">
+                            Application mobile de prise de notes. 
+                            Organisez vos idées, créez des listes de tâches
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Android</span>
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">SQLite</span>
+                        </div>
+                        <a href="https://github.com/RANTOfandresena/Block-Note" class="project-link" target="_blank">
+                            Voir le projet
+                        </a>
+                    </div>
+                    <div class="slide-media">
+                        <div class="media-gallery">
+                            <div class="main-media">
+                                <img id="note-main" src="assets/note1.jpg" alt="Block Note App">
+                            </div>
+                            <div class="media-thumbnails">
+                                <img class="media-thumbnail active" data-target="note-main" data-src="assets/note1.jpg" data-type="image" src="assets/note1.jpg" alt="Note 1">
+                                <img class="media-thumbnail" data-target="note-main" data-src="assets/note2.jpg" data-type="image" src="assets/note2.jpg" alt="Note 2">
+                                <img class="media-thumbnail" data-target="note-main" data-src="assets/note3.jpg" data-type="image" src="assets/note3.jpg" alt="Note 3">
+                                <img class="media-thumbnail" data-target="note-main" data-src="assets/note4.jpg" data-type="image" src="assets/note4.jpg" alt="Note 4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 6: CamShield -->
+                <div class="slide">
+                    <div class="slide-content">
+                        <img src="assets/logo_camshield.png" alt="Logo CamShield" class="project-logo">
+                        <h2 class="project-title">CamShield</h2>
+                        <p class="project-description">
+                            Système de sécurité intelligent avec détection de mouvement. Solution complète pour la surveillance 
+                            et la protection des espaces privés et professionnels.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Android</span>
+                            <span class="tech-tag">Java/kotlin</span>
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">IOT</span>
+                        </div>
+                        <a href="https://github.com/tynaandritahina/Porte-Ouverte" class="project-link" target="_blank">
+                            Voir le projet
+                        </a>
+                    </div>
+                    <div class="slide-media">
+                        <div class="media-gallery">
+                            <div class="main-media">
+                                <video id="camshield-main" controls muted autoplay>
+                                    <source src="assets/camshield.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <button class="nav-button prev" onclick="previousSlide()">‹</button>
+        <button class="nav-button next" onclick="nextSlide()">›</button>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.getElementById('slides');
+        const totalSlides = 6;
+        
+        // Create navigation dots
+        const navDots = document.getElementById('navDots');
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'nav-dot';
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            navDots.appendChild(dot);
+        }
+        
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update nav dots
+            document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlide();
+        }
+        
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlide();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+        }
+        
+        // Auto-slide every 8 seconds
+        setInterval(nextSlide, 16000);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') previousSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+        
+        // Create animated particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                particles.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+        
+        // Media gallery functionality
+        function initMediaGallery() {
+            const thumbnails = document.querySelectorAll('.media-thumbnail');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+                    const newSrc = this.getAttribute('data-src');
+                    const mediaType = this.getAttribute('data-type');
+                    
+                    // Remove active class from all thumbnails in this gallery
+                    const galleryThumbnails = this.parentNode.querySelectorAll('.media-thumbnail');
+                    galleryThumbnails.forEach(thumb => thumb.classList.remove('active'));
+                    
+                    // Add active class to clicked thumbnail
+                    this.classList.add('active');
+                    
+                    // Update main media
+                    if (mediaType === 'video') {
+                        targetElement.innerHTML = `<source src="${newSrc}" type="video/mp4">`;
+                        targetElement.load();
+                    } else {
+                        targetElement.src = newSrc;
+                    }
+                });
+            });
+        }
+        
+        // Initialize media gallery
+        initMediaGallery();
+        
+        // Touch/swipe support for mobile
+        let startX = 0;
+        let endX = 0;
+        
+        slides.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+        
+        slides.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const difference = startX - endX;
+            if (Math.abs(difference) > 50) {
+                if (difference > 0) {
+                    nextSlide();
+                } else {
+                    previousSlide();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
